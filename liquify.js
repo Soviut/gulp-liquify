@@ -3,11 +3,9 @@ var Promise = require("bluebird");
 var tinyliquid = require("tinyliquid");
 var path = require("path");
 
-var liquify = function(contents, locals, includeBase, prefix){
+var liquify = function(contents, extraContext, includeBase, prefix){
   var template;
-  var context = tinyliquid.newContext({
-      locals: locals
-    });
+  var context = tinyliquid.newContext(extraContext);
 
   if(!contents) {
     contents = '';
