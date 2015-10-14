@@ -1,6 +1,6 @@
 {
   "name": "gulp-liquify",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Render Liquid templates in Gulp using TinyLiquid",
   "main": "",
   "repository": "https://github.com/fchasen/gulp-liquify.git",
