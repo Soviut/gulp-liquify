@@ -17,8 +17,15 @@ $ npm install gulp-liquify
 var liquify = require('gulp-liquify');
 
 gulp.task("liquify", function() {
-  var locals = {
-    name: "Fred"
+  var context = {
+    locals: {
+      name: "Fred"
+    },
+    filters: {
+      asset_url: function(value) {
+        return value;
+      }
+    }
   };
   gulp.src('*.liquid')
     .pipe(liquify(locals))
@@ -45,9 +52,11 @@ gulp.task("liquify", function() {
   };
   gulp.src('*.liquid')
     .pipe(through.obj(function(file, enc, cb) {
-      file.locals = {
-        number: Math.random(),
-        path: file.path
+      file.context = {
+        locals: {
+          number: Math.random(),
+          path: file.path
+        }
       };
       cb(null, file);
     }))
