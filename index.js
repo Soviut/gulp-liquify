@@ -8,7 +8,7 @@ var liquify = require('./liquify');
 const PLUGIN_NAME = 'gulp-liquify';
 
 // plugin level function (dealing with files)
-function gulpLiquify(locals, options) {
+function gulpLiquify(context, options) {
 
   var settings = _.defaults(options || {}, {
     "base": false,
@@ -22,14 +22,14 @@ function gulpLiquify(locals, options) {
     if (file.isStream()) { return this.emit('error', new PluginError('gulp-liquify',  'Streaming not supported')); }
 
     // Clone a fresh copy, so as not to affect others
-    var tempLocals = locals ? _.clone(locals) : {};
+    var tempContext = context ? _.clone(context) : {};
 
-    // Apply file specific locals
-    if(file.locals) {
-      tempLocals = _.defaults(file.locals, tempLocals);
+    // Apply file specific context
+    if(file.context) {
+      tempContext = _.defaults(file.context, tempContext);
     }
 
-    liquify(file.contents.toString("utf-8"), tempLocals, settings.base || file.base, settings.prefix)
+    liquify(file.contents.toString("utf-8"), tempContext, settings.base || file.base, settings.prefix)
       .then(function(result) {
         file.contents = new Buffer(result, "utf-8");
         this.push(file);
